@@ -1,271 +1,114 @@
-import React, { Component } from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import configureStore from './config/configureStore';
-import { Provider } from 'react-redux';
-import Routes from './Routes';
-import ScrollToTop from './utils/ScrollToTop';
-import './assets/base.scss';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import React from "react";
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
-import { library } from '@fortawesome/fontawesome-svg-core';
-import {
-  fab,
-  faFacebook,
-  faTwitter,
-  faVuejs,
-  faReact,
-  faHtml5,
-  faGoogle,
-  faInstagram,
-  faPinterest,
-  faYoutube,
-  faDiscord,
-  faSlack,
-  faDribbble,
-  faGithub
-} from '@fortawesome/free-brands-svg-icons';
-import {
-  far,
-  faSquare,
-  faLifeRing,
-  faCheckCircle,
-  faTimesCircle,
-  faDotCircle,
-  faThumbsUp,
-  faComments,
-  faFolderOpen,
-  faTrashAlt,
-  faFileImage,
-  faFileArchive,
-  faCommentDots,
-  faFolder,
-  faKeyboard,
-  faCalendarAlt,
-  faEnvelope,
-  faAddressCard,
-  faMap,
-  faObjectGroup,
-  faImages,
-  faUser,
-  faLightbulb,
-  faGem,
-  faClock,
-  faUserCircle,
-  faQuestionCircle,
-  faBuilding,
-  faBell,
-  faFileExcel,
-  faFileAudio,
-  faFileVideo,
-  faFileWord,
-  faFilePdf,
-  faFileCode,
-  faFileAlt,
-  faEye,
-  faChartBar
-} from '@fortawesome/free-regular-svg-icons';
-import {
-  fas,
-  faAngleDoubleRight,
-  faAngleDoubleLeft,
-  faSmile,
-  faHeart,
-  faBatteryEmpty,
-  faBatteryFull,
-  faChevronRight,
-  faSitemap,
-  faPrint,
-  faMapMarkedAlt,
-  faTachometerAlt,
-  faAlignCenter,
-  faExternalLinkAlt,
-  faShareSquare,
-  faInfoCircle,
-  faSync,
-  faQuoteRight,
-  faStarHalfAlt,
-  faShapes,
-  faCarBattery,
-  faTable,
-  faCubes,
-  faPager,
-  faCameraRetro,
-  faBomb,
-  faNetworkWired,
-  faBusAlt,
-  faBirthdayCake,
-  faEyeDropper,
-  faUnlockAlt,
-  faDownload,
-  faAward,
-  faPlayCircle,
-  faReply,
-  faUpload,
-  faBars,
-  faEllipsisV,
-  faSave,
-  faSlidersH,
-  faCaretRight,
-  faChevronUp,
-  faPlus,
-  faLemon,
-  faChevronLeft,
-  faTimes,
-  faChevronDown,
-  faFilm,
-  faSearch,
-  faEllipsisH,
-  faCog,
-  faArrowsAltH,
-  faPlusCircle,
-  faAngleRight,
-  faAngleUp,
-  faAngleLeft,
-  faAngleDown,
-  faArrowUp,
-  faArrowDown,
-  faArrowRight,
-  faArrowLeft,
-  faStar,
-  faSignOutAlt,
-  faLink
-} from '@fortawesome/free-solid-svg-icons';
-library.add(
-  far,
-  faSquare,
-  faLifeRing,
-  faCheckCircle,
-  faTimesCircle,
-  faDotCircle,
-  faThumbsUp,
-  faComments,
-  faFolderOpen,
-  faTrashAlt,
-  faFileImage,
-  faFileArchive,
-  faCommentDots,
-  faFolder,
-  faKeyboard,
-  faCalendarAlt,
-  faEnvelope,
-  faAddressCard,
-  faMap,
-  faObjectGroup,
-  faImages,
-  faUser,
-  faLightbulb,
-  faGem,
-  faClock,
-  faUserCircle,
-  faQuestionCircle,
-  faBuilding,
-  faBell,
-  faFileExcel,
-  faFileAudio,
-  faFileVideo,
-  faFileWord,
-  faFilePdf,
-  faFileCode,
-  faFileAlt,
-  faEye,
-  faChartBar
-);
-library.add(
-  fab,
-  faFacebook,
-  faTwitter,
-  faVuejs,
-  faReact,
-  faHtml5,
-  faGoogle,
-  faInstagram,
-  faPinterest,
-  faYoutube,
-  faDiscord,
-  faSlack,
-  faDribbble,
-  faGithub
-);
-library.add(
-  fas,
-  faAngleDoubleRight,
-  faAngleDoubleLeft,
-  faSmile,
-  faHeart,
-  faBatteryEmpty,
-  faBatteryFull,
-  faChevronRight,
-  faSitemap,
-  faPrint,
-  faMapMarkedAlt,
-  faTachometerAlt,
-  faAlignCenter,
-  faExternalLinkAlt,
-  faShareSquare,
-  faInfoCircle,
-  faSync,
-  faQuoteRight,
-  faStarHalfAlt,
-  faShapes,
-  faCarBattery,
-  faTable,
-  faCubes,
-  faPager,
-  faCameraRetro,
-  faBomb,
-  faNetworkWired,
-  faBusAlt,
-  faBirthdayCake,
-  faEyeDropper,
-  faUnlockAlt,
-  faDownload,
-  faAward,
-  faPlayCircle,
-  faReply,
-  faUpload,
-  faBars,
-  faEllipsisV,
-  faSave,
-  faSlidersH,
-  faCaretRight,
-  faChevronUp,
-  faPlus,
-  faLemon,
-  faChevronLeft,
-  faTimes,
-  faChevronDown,
-  faFilm,
-  faSearch,
-  faEllipsisH,
-  faCog,
-  faArrowsAltH,
-  faPlusCircle,
-  faAngleRight,
-  faAngleUp,
-  faAngleLeft,
-  faAngleDown,
-  faArrowUp,
-  faArrowDown,
-  faArrowRight,
-  faArrowLeft,
-  faStar,
-  faSignOutAlt,
-  faLink
-);
+import Login from "./components/login.component";
+import SignUp from "./components/signup.component";
+import dash from "./components/Dash";
+import usedash from "./components/Usedash";
+import Exel from "./components/Exel";
 
-const store = configureStore();
+function App() {
+  const history = useHistory();
 
-class App extends Component {
-  render() {
+  const Logout = () => {
+    localStorage.clear();
+  };
+  const username = localStorage.getItem("username");
+  const role = localStorage.getItem("role");
+  if (username === null) {
     return (
-      <Provider store={store}>
-        <BrowserRouter basename="/carolina-react-admin-dashboard-material-ui-free/">
-          <CssBaseline />
-          <ScrollToTop>
-            <Routes />
-          </ScrollToTop>
-        </BrowserRouter>
-      </Provider>
+      <Router>
+        <div className="App">
+          <nav className="navbar navbar-expand-lg navbar-light fixed-top">
+            <div className="container">
+              <Link className="navbar-brand" to={"/sign-in"}>
+                RemoteStack
+              </Link>
+              <div
+                className="collapse navbar-collapse"
+                id="navbarTogglerDemo02"
+              >
+                <ul className="navbar-nav ml-auto">
+                  <li className="nav-item">
+                    <Link className="nav-link" to={"/sign-in"}>
+                      Sign in
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link" to={"/sign-up"}>
+                      Sign up
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+
+          <div className="outer">
+            <div className="inner">
+              <Switch>
+                <Route exact path="/" component={Login} />
+                <Route path="/sign-in" component={Login} />
+                <Route path="/dash" component={dash} />
+                <Route path="/usedash" component={usedash} />
+                <Route path="/sign-up" component={SignUp} />
+                <Route path="/Exel" component={Exel} />
+              </Switch>
+            </div>
+          </div>
+        </div>
+      </Router>
+    );
+  } else {
+    return (
+      <Router>
+        <div className="App">
+          <nav className="navbar navbar-expand-lg navbar-light fixed-top">
+            <div className="container">
+              <Link className="navbar-brand" to={"/sign-in"}>
+                RemoteStack
+              </Link>
+              <div
+                className="collapse navbar-collapse"
+                id="navbarTogglerDemo02"
+              >
+                <ul className="navbar-nav ml-auto">
+                  <li className="nav-item">
+                    <Link className="nav-link">welcome {username}</Link>
+                  </li>
+
+                  <li
+                    onClick={() => {
+                      Logout();
+                    }}
+                    className="nav-item"
+                  >
+                    <Link className="nav-link" to={"/sign-in"}>
+                      Logout
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+
+          <div className="container">
+            <div className="container">
+              <Switch>
+                <Route exact path="/" component={Login} />
+                <Route path="/sign-in" component={Login} />
+                <Route path="/dash" component={dash} />
+                <Route path="/usedash" component={usedash} />
+                <Route path="/sign-up" component={SignUp} />
+                <Route path="/Exel" component={Exel} />
+              </Switch>
+            </div>
+          </div>
+        </div>
+      </Router>
     );
   }
 }
