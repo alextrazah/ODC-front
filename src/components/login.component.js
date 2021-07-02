@@ -18,7 +18,7 @@ const Login = () => {
 
       console.log(userPosts.data[0].Role);
       if (userPosts.data[0].Role === "Admin") {
-        localStorage.setItem("id", userPosts.data[0].id);
+        localStorage.setItem("id", userPosts.data[0]._id);
         localStorage.setItem("username", userPosts.data[0].Firstname);
         localStorage.setItem("lastname", userPosts.data[0].Lastname);
         localStorage.setItem("mail", userPosts.data[0].Email);
@@ -28,7 +28,7 @@ const Login = () => {
         history.push("/dash");
       }
       if (userPosts.data[0].Role === "DRE") {
-        localStorage.setItem("id", userPosts.data[0].id);
+        localStorage.setItem("id", userPosts.data[0]._id);
         localStorage.setItem("username", userPosts.data[0].Firstname);
         localStorage.setItem("lastname", userPosts.data[0].Lastname);
         localStorage.setItem("mail", userPosts.data[0].Email);
@@ -37,7 +37,7 @@ const Login = () => {
         console.log("DRE");
         history.push("/usedash");
       } else if (userPosts.data[0].Role === "DSI") {
-        localStorage.setItem("id", userPosts.data[0].id);
+        localStorage.setItem("id", userPosts.data[0]._id);
 
         localStorage.setItem("username", userPosts.data[0].Firstname);
         localStorage.setItem("lastname", userPosts.data[0].Lastname);
@@ -47,8 +47,7 @@ const Login = () => {
         history.push("/usedash");
         console.log("DSI");
       } else if (userPosts.data[0].Role === "DRS") {
-        localStorage.setItem("id", userPosts.data[0].id);
-
+        localStorage.setItem("id", userPosts.data[0]._id);
         localStorage.setItem("username", userPosts.data[0].Firstname);
         localStorage.setItem("lastname", userPosts.data[0].Lastname);
         localStorage.setItem("mail", userPosts.data[0].Email);

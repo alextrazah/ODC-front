@@ -4,11 +4,12 @@ import { useFormik } from "formik";
 import { useHistory } from "react-router-dom";
 import { queryServerApi } from "../utils/queryServerApi";
 import "../App.css";
-import jsPDF from "jspdf-autotable";
+import Pdf from "react-to-pdf";
 
 const Usedash = () => {
   const [error, setError] = useState({ visible: false, message: "" });
   const history = useHistory();
+  const ref = React.createRef();
 
   const formik = useFormik({
     initialValues: {
@@ -30,27 +31,9 @@ const Usedash = () => {
           visible: true,
           message: JSON.stringify(err.errors, null, 2),
         });
-      } else history.push("/sign-in");
+      }
     },
   });
-  const doc = new jsPDF();
-
-  function down() {
-    doc.autoTable({
-      head: [["Name", "Lastname", "Email", "Password"]],
-      body: [
-        [
-          localStorage.getItem("username"),
-          localStorage.getItem("lastname"),
-          localStorage.getItem("mail"),
-          localStorage.getItem("pass"),
-        ],
-        // ...
-      ],
-    });
-
-    doc.save("table.pdf");
-  }
 
   return (
     <div class="containers">
@@ -58,15 +41,27 @@ const Usedash = () => {
       <br></br>
 
       <br></br>
+      <Pdf targetRef={ref} filename="code-example.pdf">
+        {({ toPdf }) => <button onClick={toPdf}>Generate Pdf</button>}
+      </Pdf>
 
-      <button
-        onClick={() => {
-          down();
-        }}
-        className="btn btn-dark btn-lg btn-block"
-      >
-        downloadpdf
-      </button>
+      <table ref={ref}>
+        <tr>
+          <th>Firstname</th>
+          <th>Lastname</th>
+          <th>Email</th>
+          <th>Password</th>
+          <th>Role</th>
+        </tr>
+        <tr>
+          <td>{localStorage.getItem("username")}</td>
+          <td>{localStorage.getItem("lastname")}</td>
+          <td>{localStorage.getItem("mail")}</td>
+          <td>crypted</td>
+          <td>{localStorage.getItem("role")}</td>
+        </tr>
+      </table>
+
       <form onSubmit={formik.handleSubmit}>
         <h3>Edit account</h3>
         <div className="form-group">
@@ -132,7 +127,7 @@ const Usedash = () => {
         </div>
 
         <button type="submit" className="btn btn-dark btn-lg btn-block">
-          Register
+          Edit
         </button>
         <p className="forgot-password text-right">
           Already registered <a href="#">log in?</a>
