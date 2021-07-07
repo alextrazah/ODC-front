@@ -39,12 +39,16 @@ const Usedash = () => {
     <div class="containers">
       <br></br>
       <br></br>
-
       <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br> <br></br>
       <Pdf targetRef={ref} filename="code-example.pdf">
         {({ toPdf }) => <button onClick={toPdf}>Generate Pdf</button>}
       </Pdf>
-
       <table ref={ref}>
         <tr>
           <th>Firstname</th>
@@ -61,7 +65,6 @@ const Usedash = () => {
           <td>{localStorage.getItem("role")}</td>
         </tr>
       </table>
-
       <form onSubmit={formik.handleSubmit}>
         <h3>Edit account</h3>
         <div className="form-group">

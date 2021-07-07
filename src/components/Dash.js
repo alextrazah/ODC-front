@@ -18,6 +18,8 @@ const Dash = () => {
       minWidth: 650,
     },
   });
+  const history = useHistory();
+
   const [email, setemail] = useState();
   const [password, setpassword] = useState();
   const [file, setfile] = useState();
@@ -53,7 +55,9 @@ const Dash = () => {
       false
     );
   };
-
+  function importit() {
+    history.push("/Exel");
+  }
   function go(id) {
     console.log(id);
     const goit = async () => {
@@ -91,25 +95,8 @@ const Dash = () => {
   return (
     <div class="w3-container">
       <br></br> <br></br> <br></br> <br></br>
-      <div className="form-row">
-        <div className="form-group col-md-6"></div>
-        <div className="form-row">
-          <label className="text-white">Select File :</label>
-          <input
-            type="file"
-            className="form-control"
-            name="upload_file"
-            onChange={handleInputChange}
-          />
-          <button
-            type="submit"
-            className="btn btn-dark"
-            onClick={() => submit()}
-          >
-            Save
-          </button>
-        </div>
-      </div>
+      <h1>liste des users</h1>
+      <br></br> <br></br> <br></br> <br></br>
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
@@ -130,17 +117,19 @@ const Dash = () => {
                     <TableCell align="right">{row.Email}</TableCell>
                     <TableCell color="blue">{row.Role}</TableCell>
                     <TableCell>
-                      {row.Role != "Admin" && row.Active == 1 && (
-                        <button
-                          onClick={() => {
-                            des(row._id);
-                          }}
-                          className="btn btn-dark btn-lg btn-block"
-                        >
-                          Supprimer
-                        </button>
-                      )}{" "}
-                      {row.Role != "Admin" && row.Active == 0 && (
+                      {row.Role != "Admin" &&
+                        row.Active == 1 &&
+                        row.Role != 0 && (
+                          <button
+                            onClick={() => {
+                              des(row._id);
+                            }}
+                            className="btn btn-dark btn-lg btn-block"
+                          >
+                            Supprimer
+                          </button>
+                        )}{" "}
+                      {row.Role != "Admin" && row.Role == 0 && (
                         <button className=" btn-lg btn-block">Desactivé</button>
                       )}{" "}
                       {row.Role === "Admin" && (
@@ -153,6 +142,14 @@ const Dash = () => {
           </TableBody>
         </Table>
       </TableContainer>
+      <button
+        onClick={() => {
+          importit();
+        }}
+        className=" btn-lg btn-block"
+      >
+        Importfiles ?
+      </button>
     </div>
   );
 };

@@ -26,8 +26,7 @@ const Login = () => {
         localStorage.setItem("role", userPosts.data[0].Role);
         console.log("admin");
         history.push("/dash");
-      }
-      if (userPosts.data[0].Role === "DRE") {
+      } else if (userPosts.data[0].Role === "DRE") {
         localStorage.setItem("id", userPosts.data[0]._id);
         localStorage.setItem("username", userPosts.data[0].Firstname);
         localStorage.setItem("lastname", userPosts.data[0].Lastname);
@@ -55,6 +54,8 @@ const Login = () => {
         localStorage.setItem("role", userPosts.data[0].Role);
         console.log("DRS");
         history.push("/usedash");
+      } else if (userPosts.data[0].Role === "0") {
+        alert("Votre compte est désactivé");
       } else alert("wrong pass/email");
     } catch (err) {
       console.error(err.message);

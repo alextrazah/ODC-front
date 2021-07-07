@@ -71,8 +71,11 @@ class ExcelToJson extends React.Component {
     };
     reader.readAsBinaryString(f);
   }
-  go = async (email, nom, prenom, pass) => {
+  go = async (id, email, nom, prenom, pass) => {
+    console.log(id * 1000);
     try {
+      await this.timeout(id * 1000);
+
       const userPosts = await axios.post(
         "http://localhost:3000/users/addxl/" +
           email +
@@ -87,7 +90,9 @@ class ExcelToJson extends React.Component {
       console.error(err.message);
     }
   };
-
+  timeout(delay: number) {
+    return new Promise((res) => setTimeout(res, delay));
+  }
   values(val) {
     var myObject = JSON.parse(val);
 
@@ -101,6 +106,7 @@ class ExcelToJson extends React.Component {
                   <span align="right">{console.log(row.Email)}</span>
                   <span align="right">{console.log(row.Password)}</span>
                   {this.go(
+                    row.id,
                     row.Email,
                     row.Firstname,
                     row.Lastname,
